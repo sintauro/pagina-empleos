@@ -287,6 +287,11 @@
             margin-bottom: 15px;
         }
         
+        #login {
+  display: none !important;
+}
+
+        
         /* Categories */
         .categories {
             padding: 60px 0;
@@ -526,19 +531,26 @@
             .registro-container {
                 padding: 20px;
             }
-        }
+            
+ </style>
+
+        
     </style>
 </head>
 <body>
     <!-- Header -->
+    
     <header>
-        <div class="top-nav">
-            <div class="container">
-                <a href="#">Contacto</a>
-                <a href="#">Iniciar Sesión</a>
-                <a href="#registro">Registrarse</a>
-            </div>
-        </div>
+  <div class="top-nav">
+  <div class="container">
+    <a href="#">Contacto</a>
+    <a href="login.html" target="_blank">Iniciar Sesión</a>
+   <!-- <- este es el que debes cambiar -->
+    <a href="#registro">Registrarse</a>
+  </div>
+</div>
+
+         <a href="#login"><login class="html"></login></a>
         <div class="container">
             <nav class="main-nav">
                 <a href="#" class="logo">Tu<span>Empleo</span></a>
@@ -777,29 +789,54 @@
     </section>
 
     <!-- Registro Section -->
-    <section id="registro" class="registro-section">
-        <div class="container">
-            <h2 class="section-title">Crea tu cuenta gratis</h2>
-            <div class="registro-container">
-                <form id="registroForm" class="registro-form">
-                    <div class="form-group">
-                        <label for="nombre">Nombre completo</label>
-                        <input type="text" id="nombre" name="nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Correo electrónico</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn-registro">Registrarse</button>
-                </form>
-            </div>
+<section id="registro" class="registro-section">
+  <div class="container">
+    <h2 class="section-title">Crea tu cuenta gratis</h2>
+    <div class="registro-container">
+      <form id="registroForm" class="registro-form">
+        <div class="form-group">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" required>
         </div>
-    </section>
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-registro">Registrarse</button>
+      </form>
+    </div>
+  </div>
+</section>
 
+<!-- <section id="login-pantalla-completa">
+   (Aquí copias todo el div .login-container del formulario que generó Claude)
+</section>
+
+(Login Section)
+<section id="login" class="registro-section">
+  <div class="container">
+    <h2 class="section-title">Iniciar sesión</h2>
+    <div class="registro-container">
+      <form id="loginForm" class="registro-form">
+        <div class="form-group">
+          <label for="loginEmail">Correo electrónico</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <button type="submit" class="btn-registro">Ingresar</button>
+      </form>
+      <div class="top-nav">
+</div>
+    </div>
+  </div>
+</section> -->
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -879,6 +916,59 @@
       .catch(error => {
         alert('Ocurrió un error al registrar.');
         console.error('Error:', error);
+      });
+    });
+  });
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Registro
+    const registroForm = document.getElementById('registroForm');
+    registroForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      fetch('http://localhost:3000/registro', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ nombre, email, password })
+      })
+      .then(res => res.json())
+      .then(data => alert(data.mensaje))
+      .catch(err => {
+        console.error('Error:', err);
+        alert('Error al registrar');
+      });
+    });
+
+    // Login
+    document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      fetch('http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.mensaje || 'Respuesta del servidor');
+        })
+        .catch(error => {
+          alert('Error al iniciar sesión');
+          console.error(error);node backend/index.js
+
       });
     });
   });

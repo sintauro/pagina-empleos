@@ -1,0 +1,9 @@
+backend/
+├── controllers/
+│   └── authController.js
+├── routes/
+│   └── authRoutes.js
+├── db.js
+├── server.js
+├── .env
+└── package.json
